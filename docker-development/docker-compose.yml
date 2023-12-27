@@ -1,20 +1,6 @@
 version: '3.0'
 
 services:
-  database:
-    container_name: webprovise-database
-    image: postgres
-    ports:
-      - '5432:5432'
-    volumes:
-      - webprovise-db:/var/lib/postgresql
-      - webprovise-pgdata:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: webprovise-dev
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Secret123@
-      PGDATA: /var/lib/postgresql/data/
-
   api:
     container_name: webprovise-api
     build:
@@ -27,8 +13,6 @@ services:
       - webprovise-node_modules:/home/node/api/node_modules
     ports:
       - '3001:3001'
-    links:
-      - database
     command: yarn run start:dev --watch
 
   portainer:
@@ -44,7 +28,5 @@ services:
       - webprovise-portainer_data:/data
 
 volumes:
-  webprovise-db:
-  webprovise-pgdata:
   webprovise-node_modules:
   webprovise-portainer_data:
